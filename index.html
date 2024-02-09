@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>World Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <h1>Virtual world</h1>
+    <canvas id="mycanvas"></canvas>
+    <script>
+
+    </script>
+    <div id="" controls>
+        <h1>Hello</h1>
+
+    </div>
+
+
+
+    <script src="js/graphEditor.js"></script>
+    <script src="js/viewport.js"></script>
+    <script src="js/math/utils/utils.js"></script>
+    <script src="js/math/graph.js"></script>
+    <script src="js/premitive/point.js"></script>
+    <script src="js/premitive/segement.js"></script>
+    <script>
+        mycanvas.width = 600;
+        mycanvas.height = 600;
+
+        // access the 2d contex of the canvas
+        const ctx = mycanvas.getContext("2d");
+        const p1 = new Point(200, 200);
+        const p2 = new Point(500, 200);
+        const p3 = new Point(450, 450);
+        const p4 = new Point(100, 300);
+
+        const s1 = new Segment(p1, p2);
+        const s2 = new Segment(p1, p3);
+        const s3 = new Segment(p1, p4);
+        const s4 = new Segment(p2, p3);
+
+
+        const graph = new Graph([p1, p2, p3, p4], [s1, s2, s3, s4]);
+        const viewport = new Viewport(mycanvas);
+        const graphEditor = new GraphEditor(mycanvas, graph) // it accepts my canvas for event handelling
+        animate()
+        // graph.draw(ctx);
+        function animate() {
+            ctx.clearRect(0, 0, mycanvas.width, mycanvas.height); // refresh and clear with the new point added
+            ctx.save();
+            ctx.scale(1 / viewport.zoom, 1 / viewport.zoom);
+            graphEditor.display(); // display the object
+            ctx.restore()
+            requestAnimationFrame(animate); // calls the function 60 times per sec
+        }
+    </script>
+</body>
+
+</html>
